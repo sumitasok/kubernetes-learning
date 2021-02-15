@@ -11,7 +11,10 @@ Ideally a database holding file  information like name size md5 value will be us
 
 This is a perfect candidate for Stateful sets; and shared volumes in kubernetes. Because my experience in that is limited, I will be running a single pod (no replicas) for the time being.
 
-While implementing a service exposed through http, following AWS s3 API is recommended as industry is considering it to be a standard.
+While implementing a service exposed through http, following AWS s3 API is recommended as industry is considering it to be a standard. But cant do it for the two day assignment.
+
+Use of the remote-update protocol, to transfer only the difference between files content like rsync.
+ref: https://www.tecmint.com/sync-new-changed-modified-files-rsync-linux/
 
 #### Server
 - Fetch all files in the system.
@@ -54,4 +57,5 @@ https://github.com/golang-standards/project-layout
 
 Notes:
 
-go-vet in pre-commit hook is throwing error. prioritising the task over go vet in pre-commit. go vet will be run manually.
+- go-vet in pre-commit hook is throwing error. prioritising the task over go vet in pre-commit. go vet will be run manually.
+- using `main` banch as this is a test task. a complete git qorkflow will be followed in case of usual development.
