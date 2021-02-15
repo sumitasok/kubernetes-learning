@@ -33,3 +33,12 @@ This is a perfect candidate for Stateful sets; and shared volumes in kubernetes.
 	- Make update request with md5 and verify if there is any change in the client copy compared to existing server copy.
 
 How to make sure only changed data is send across network like  applying a diff patch.
+
+[] setup pre-commit hooks for analysing code quality.
+
+
+### Install Pre-commit for code analysis
+
+```
+brew install pre-commit
+```
