@@ -14,6 +14,8 @@ This is a perfect candidate for Stateful sets; and shared volumes in kubernetes.
 #### Server
 - Fetch all files in the system.
 - Fetch file by name <- return file name, size, md5 sum
+- verify API
+    - using the filename, size and md5 send to server; check if this file already exists by name or by md5 match.
 - Add, validate if the file exists, with same size and md5 check sum
 	- Return error if file exist with details about the uniqueness value(same or new file)
 	- Store the md5 of the file for easy comparison of files
