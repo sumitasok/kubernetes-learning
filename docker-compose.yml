@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: ./build/server/Dockerfile
+    volumes:
+      - ./filestore:/store
 
   client:
     build:

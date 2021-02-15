@@ -21,4 +21,6 @@ WORKDIR /go/src/github.com/sumitasok/kubernetes-learning
 
 COPY --from=buildstage /go/src/github.com/sumitasok/kubernetes-learning/cmd/server .
 
+RUN mkdir /store
+
 CMD ["./server"]
