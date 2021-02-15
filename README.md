@@ -11,6 +11,8 @@ Ideally a database holding file  information like name size md5 value will be us
 
 This is a perfect candidate for Stateful sets; and shared volumes in kubernetes. Because my experience in that is limited, I will be running a single pod (no replicas) for the time being.
 
+While implementing a service exposed through http, following AWS s3 API is recommended as industry is considering it to be a standard.
+
 #### Server
 - Fetch all files in the system.
 - Fetch file by name <- return file name, size, md5 sum
@@ -41,4 +43,11 @@ How to make sure only changed data is send across network like  applying a diff 
 
 ```
 brew install pre-commit
+
+# from inside the repo root
+pre-commit install
 ```
+
+### code structure standard documentations followed from
+
+https://github.com/golang-standards/project-layout
