@@ -57,3 +57,8 @@ func (inMemory InMemory) Add(fname string, checksum string) error {
 
 	return err
 }
+
+// GetFileByName
+// GetFileBySameData
+// Update
+// Delete
