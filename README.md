@@ -49,6 +49,14 @@ brew install pre-commit
 
 # from inside the repo root
 pre-commit install
+
+go get -u golang.org/x/lint/golint
+go get -u github.com/fzipp/gocyclo/cmd/gocyclo
+
+
+brew tap alecthomas/homebrew-tap
+brew install gometalinter
+
 ```
 
 ### code structure standard documentations followed from
