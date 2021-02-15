@@ -51,3 +51,7 @@ pre-commit install
 ### code structure standard documentations followed from
 
 https://github.com/golang-standards/project-layout
+
+Notes:
+
+go-vet in pre-commit hook is throwing error. prioritising the task over go vet in pre-commit. go vet will be run manually.

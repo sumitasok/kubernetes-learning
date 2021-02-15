@@ -1,0 +1,12 @@
+version: '3.1'
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: ./build/server/Dockerfile
+
+  client:
+    build:
+      context: .
+      dockerfile: ./build/client/Dockerfile

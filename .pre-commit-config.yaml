@@ -2,11 +2,11 @@
   rev: master
   hooks:
     - id: go-fmt
-    # - id: go-vet
     - id: go-lint
     - id: go-imports
     - id: go-cyclo
       args: [-over=15]
+    # - id: go-vet
     # - id: validate-toml
     # - id: no-go-testing
     # - id: gometalinter
