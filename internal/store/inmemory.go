@@ -5,6 +5,8 @@ import (
 	"fmt"
 )
 
+// Use of RDBMS instance would be better for persistance and easy query without having to duplicate values like done below (Filename and checksum based query)
+
 // File holds checksum and name - creation of object is not allowed from outside this module.
 // Making `File` exported as linted is giving a new error for having returned unexported store.file
 // The intension is to have access to store.file via New factory method. However for this task, as I was not able to selectively suppress(Doesnt exist) this warning

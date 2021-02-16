@@ -7,6 +7,11 @@ services:
       dockerfile: ./build/server/Dockerfile
     volumes:
       - ./filestore:/store
+    # need to move env to .env file with .env.sample provided.
+    environment:
+      PORT: ":8080"
+    ports:
+      - "8080:8080"
 
   client:
     build:

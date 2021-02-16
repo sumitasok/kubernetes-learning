@@ -37,7 +37,7 @@ ref: https://www.tecmint.com/sync-new-changed-modified-files-rsync-linux/
 - Update
 	- Make update request with md5 and verify if there is any change in the client copy compared to existing server copy.
 
-How to make sure only changed data is send across network like  applying a diff patch.
+How to make sure only changed data is send across network like applying a diff patch.
 
 [] setup pre-commit hooks for analysing code quality.
 
@@ -66,4 +66,4 @@ https://github.com/golang-standards/project-layout
 Notes:
 
 - go-vet in pre-commit hook is throwing error. prioritising the task over go vet in pre-commit. go vet will be run manually.
-- using `main` banch as this is a test task. a complete git qorkflow will be followed in case of usual development.
+- using `main` branch as this is a test task. a complete git workflow will be followed in case of usual development.
