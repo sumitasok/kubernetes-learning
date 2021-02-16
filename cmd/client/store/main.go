@@ -21,6 +21,8 @@ func main() {
 		add(os.Args[2:]...)
 	case "ls":
 		ls()
+	case "update":
+		update(os.Args[2:]...)
 	}
 }
 
@@ -97,6 +99,49 @@ func add(files ...string) {
 
 		// TODO: display in more readable tabular format
 		log.Println("add file: ", _filepath, t.Status, t.Message)
+	}
+}
+
+func update(files ...string) {
+	client := &http.Client{}
+	for _, _filepath := range files {
+		file, err := os.Open(_filepath)
+		if err != nil {
+			logCouldntAddFile(_filepath, err.Error())
+			continue
+		}
+		defer file.Close()
+
+		body := &bytes.Buffer{}
+		writer := multipart.NewWriter(body)
+		part, err := writer.CreateFormFile("file", filepath.Base(_filepath))
+		if err != nil {
+			logCouldntAddFile(_filepath, err.Error())
+			continue
+		}
+		_, err = io.Copy(part, file)
+
+		err = writer.Close()
+		if err != nil {
+			logCouldntAddFile(_filepath, err.Error())
+			continue
+		}
+
+		req, err := http.NewRequest("PUT", RemoteStoreBaseURL+"/files", body)
+		req.Header.Set("Content-Type", writer.FormDataContentType())
+		resp, err := client.Do(req)
+		if err != nil {
+			logCouldntAddFile(_filepath, err.Error())
+			continue
+		}
+		defer resp.Body.Close()
+
+		decoder := json.NewDecoder(resp.Body)
+		var t FileResp
+		err = decoder.Decode(&t)
+
+		// TODO: display in more readable tabular format
+		log.Println("update file: ", _filepath, t.Status, t.Message)
 	}
 }
 

@@ -24,6 +24,8 @@ func main() {
 	// While inmemory store simplifies the checksum creation by caching the same
 
 	router.POST("/files", fileStore.AddFile)
+	// Ideally a file identifier should be at the end of the URL
+	router.PUT("/files", fileStore.UpdateFile)
 	router.GET("/files", fileStore.LsFile)
 
 	router.Run(os.Getenv("PORT"))
