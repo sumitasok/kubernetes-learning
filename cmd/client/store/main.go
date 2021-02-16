@@ -60,9 +60,9 @@ func add(files ...string) {
 
 		_body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			log.Println("coun't add file ", file, err.Error())
+			log.Println("coun't add file ", _filepath, err.Error())
 			continue
 		}
-		log.Println("added file ", file, string(_body))
+		log.Println("add file: ", _filepath, string(_body))
 	}
 }
