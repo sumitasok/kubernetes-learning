@@ -39,7 +39,7 @@ ref: https://www.tecmint.com/sync-new-changed-modified-files-rsync-linux/
 
 How to make sure only changed data is send across network like applying a diff patch.
 
-[] setup pre-commit hooks for analysing code quality.
+[DONE] setup pre-commit hooks for analysing code quality.
 
 
 ### Install Pre-commit for code analysis
@@ -59,6 +59,24 @@ brew install gometalinter
 
 ```
 
+### Run
+
+run the server using
+
+
+```
+docker-compose up --build server
+```
+
+run the client by
+
+```
+cd cmd/client/store
+# for understanding more about go install https://golang.org/doc/tutorial/compile-install
+go install
+```
+
+
 ### code structure standard documentations followed from
 
 https://github.com/golang-standards/project-layout
@@ -67,3 +85,4 @@ Notes:
 
 - go-vet in pre-commit hook is throwing error. prioritising the task over go vet in pre-commit. go vet will be run manually.
 - using `main` branch as this is a test task. a complete git workflow will be followed in case of usual development.
+- you can search for `TODO` in the code to understand what all parts are missing and yet to be implemented.

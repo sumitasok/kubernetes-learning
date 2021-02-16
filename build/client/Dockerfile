@@ -4,7 +4,7 @@ WORKDIR /go/src/github.com/sumitasok/kubernetes-learning
 
 ADD . .
 
-WORKDIR /go/src/github.com/sumitasok/kubernetes-learning/cmd/client
+WORKDIR /go/src/github.com/sumitasok/kubernetes-learning/cmd/client/store
 
 RUN CGO_ENABLED=0 GOOS=linux go build -o client
 
@@ -19,6 +19,6 @@ ENV GOPATH /go
 
 WORKDIR /go/src/github.com/sumitasok/kubernetes-learning
 
-COPY --from=buildstage /go/src/github.com/sumitasok/kubernetes-learning/cmd/client .
+COPY --from=buildstage /go/src/github.com/sumitasok/kubernetes-learning/cmd/client/store .
 
 CMD ["./client"]

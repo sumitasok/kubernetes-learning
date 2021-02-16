@@ -17,3 +17,4 @@
 filestore/*
 filestore/*.*
 .DS_Store
+cmd/client/store/filename.txt

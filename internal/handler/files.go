@@ -21,8 +21,7 @@ func (fS FileStore) AddFile(c *gin.Context) {
 	form, _ := c.MultipartForm()
 	files := form.File["file"]
 
-	// we do support upload of multiple files in a single POST request, as the default of form implementation supports the same.
-	// we can restrict this to single file upload later.
+	// TODO: When a single file out of multiple files upload fails, handle that scenario.
 	for _, file := range files {
 		log.Println("saving... ", file.Filename)
 
