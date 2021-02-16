@@ -51,6 +51,7 @@ func ls() {
 		log.Println("coun't list files ", err.Error())
 	}
 
+	// TODO: display in more readable tabular format
 	for k := range t.Data {
 		print(k, "\n")
 	}
@@ -94,6 +95,7 @@ func add(files ...string) {
 		var t FileResp
 		err = decoder.Decode(&t)
 
+		// TODO: display in more readable tabular format
 		log.Println("add file: ", _filepath, t.Status, t.Message)
 	}
 }
