@@ -2,8 +2,8 @@ package main
 
 import (
 	"bytes"
+	"encoding/json"
 	"io"
-	"io/ioutil"
 	"log"
 	"mime/multipart"
 	"net/http"
@@ -16,11 +16,43 @@ import (
 const RemoteStoreBaseURL = "http://localhost:8080"
 
 func main() {
-	print("hi client\n")
-
 	switch os.Args[1] {
 	case "add":
 		add(os.Args[2:]...)
+	case "ls":
+		ls()
+	}
+}
+
+// FileResp holds the response from files
+type FileResp struct {
+	Data map[string]struct {
+		Checksum string `json:'Checksum'`
+		name     string `json:'Name'`
+	} `json:'data'`
+	Status  string `json:'status'`
+	Message string `json:'message'`
+}
+
+func ls() {
+	client := &http.Client{}
+	req, err := http.NewRequest("GET", RemoteStoreBaseURL+"/files", nil)
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Println("coun't list files ", err.Error())
+	}
+	defer resp.Body.Close()
+
+	decoder := json.NewDecoder(resp.Body)
+	var t FileResp
+	err = decoder.Decode(&t)
+
+	if err != nil {
+		log.Println("coun't list files ", err.Error())
+	}
+
+	for k := range t.Data {
+		print(k, "\n")
 	}
 }
 
@@ -29,7 +61,7 @@ func add(files ...string) {
 	for _, _filepath := range files {
 		file, err := os.Open(_filepath)
 		if err != nil {
-			log.Println("coun't add file ", file, err.Error())
+			logCouldntAddFile(_filepath, err.Error())
 			continue
 		}
 		defer file.Close()
@@ -38,14 +70,14 @@ func add(files ...string) {
 		writer := multipart.NewWriter(body)
 		part, err := writer.CreateFormFile("file", filepath.Base(_filepath))
 		if err != nil {
-			log.Println("coun't add file ", file, err.Error())
+			logCouldntAddFile(_filepath, err.Error())
 			continue
 		}
 		_, err = io.Copy(part, file)
 
 		err = writer.Close()
 		if err != nil {
-			log.Println("coun't add file ", file, err.Error())
+			logCouldntAddFile(_filepath, err.Error())
 			continue
 		}
 
@@ -53,16 +85,19 @@ func add(files ...string) {
 		req.Header.Set("Content-Type", writer.FormDataContentType())
 		resp, err := client.Do(req)
 		if err != nil {
-			log.Println("coun't add file ", file, err.Error())
+			logCouldntAddFile(_filepath, err.Error())
 			continue
 		}
 		defer resp.Body.Close()
 
-		_body, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
-			log.Println("coun't add file ", _filepath, err.Error())
-			continue
-		}
-		log.Println("add file: ", _filepath, string(_body))
+		decoder := json.NewDecoder(resp.Body)
+		var t FileResp
+		err = decoder.Decode(&t)
+
+		log.Println("add file: ", _filepath, t.Status, t.Message)
 	}
+}
+
+func logCouldntAddFile(filename, message string) {
+	log.Println("coun't add file ", filename, message)
 }

@@ -18,3 +18,5 @@ filestore/*
 filestore/*.*
 .DS_Store
 cmd/client/store/filename.txt
+cmd/client/store/filename_edited.txt
+cmd/client/store/note.txt

@@ -20,8 +20,11 @@ func main() {
 		MetaStore: store.NewInMemory(),
 	}
 
+	// TODO: every time server comes up, read the files and create checksum and save it in memory.
+	// While inmemory store simplifies the checksum creation by caching the same
+
 	router.POST("/files", fileStore.AddFile)
+	router.GET("/files", fileStore.LsFile)
 
 	router.Run(os.Getenv("PORT"))
-	// router.Run(":8080")
 }

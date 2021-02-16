@@ -69,7 +69,7 @@ func (fS FileStore) AddFile(c *gin.Context) {
 		log.Println("saved ", file.Filename)
 	}
 
-	c.JSON(http.StatusAccepted, gin.H{"data": gin.H{"metastoreCheckSum": fS.MetaStore.CheckSums, "metaStoreFilename": fS.MetaStore.Files}, "status": "UPLOADED", "message": "file was uploaded succesfully"})
+	c.JSON(http.StatusAccepted, gin.H{"data": fS.MetaStore.Files, "status": "UPLOADED", "message": "file was uploaded succesfully"})
 }
 
 func failedFileUploadResponse(msg string) gin.H {
@@ -78,4 +78,9 @@ func failedFileUploadResponse(msg string) gin.H {
 
 func errFailedUpload(msg string) string {
 	return "file upload failed " + msg
+}
+
+// LsFile adds the file to store
+func (fS FileStore) LsFile(c *gin.Context) {
+	c.JSON(http.StatusAccepted, gin.H{"data": fS.MetaStore.Files, "status": "DONE", "message": "successfully retrieved files"})
 }

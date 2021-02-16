@@ -1,6 +1,23 @@
 # kubernetes-learning
 repo for having sample application that helps in learning kubernetes.
 
+### Run
+
+run the server using
+
+
+```
+docker-compose up --build server
+```
+
+run the client by
+
+```
+cd cmd/client/store
+# for understanding more about go install https://golang.org/doc/tutorial/compile-install
+go install
+```
+
 ## Requirement and Task analysis
 
 Text files only; check the allowed file extension;
@@ -57,23 +74,6 @@ go get -u github.com/fzipp/gocyclo/cmd/gocyclo
 brew tap alecthomas/homebrew-tap
 brew install gometalinter
 
-```
-
-### Run
-
-run the server using
-
-
-```
-docker-compose up --build server
-```
-
-run the client by
-
-```
-cd cmd/client/store
-# for understanding more about go install https://golang.org/doc/tutorial/compile-install
-go install
 ```
 
 
