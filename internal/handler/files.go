@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 
 	"github.com/gin-gonic/gin"
 	"github.com/sumitasok/kubernetes-learning/internal"
@@ -80,7 +81,7 @@ func errFailedUpload(msg string) string {
 	return "file upload failed " + msg
 }
 
-// LsFile adds the file to store
+// LsFile lists metainfo of the files in store
 func (fS FileStore) LsFile(c *gin.Context) {
 	c.JSON(http.StatusAccepted, gin.H{"data": fS.MetaStore.Files, "status": "DONE", "message": "successfully retrieved files"})
 }
@@ -132,4 +133,14 @@ func (fS FileStore) UpdateFile(c *gin.Context) {
 
 	// TODO: distiguish between update and add.
 	c.JSON(http.StatusAccepted, gin.H{"data": fS.MetaStore.Files, "status": "UPDATED", "message": "file was updated succesfully"})
+}
+
+// GetFile returns a single file to local
+func (fS FileStore) GetFile(c *gin.Context) {
+	targetPath := filepath.Join("/store/", c.Param("filename"))
+	c.Header("Content-Description", "File Transfer")
+	c.Header("Content-Transfer-Encoding", "binary")
+	c.Header("Content-Disposition", "attachment; filename="+c.Param("filename"))
+	c.Header("Content-Type", "application/octet-stream")
+	c.File(targetPath)
 }

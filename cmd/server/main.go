@@ -27,6 +27,7 @@ func main() {
 	// Ideally a file identifier should be at the end of the URL
 	router.PUT("/files", fileStore.UpdateFile)
 	router.GET("/files", fileStore.LsFile)
+	router.GET("/files/:filename", fileStore.GetFile)
 
 	router.Run(os.Getenv("PORT"))
 }

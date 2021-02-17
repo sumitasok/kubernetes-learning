@@ -18,3 +18,15 @@ func TestInMemory_Add(t *testing.T) {
 	assert.NoError(iM.Add("fileB.txt", "check-sum-2"))
 	assert.Error(iM.Add("fileB.txt", "check-sum-3"), "New error 2")
 }
+
+func TestInMemory_GetFileByName(t *testing.T) {
+	assert := assert.New(t)
+
+	iM := store.NewInMemory()
+
+	assert.NoError(iM.Add("fileA.txt", "check-sum-1"))
+	_, err := iM.GetFileByName("fileA.txt")
+	assert.NoError(err)
+	_, err = iM.GetFileByName("fileB.txt")
+	assert.Error(err)
+}

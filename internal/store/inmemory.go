@@ -60,7 +60,15 @@ func (inMemory InMemory) Add(fname string, checksum string) error {
 	return err
 }
 
-// GetFileByName
+// GetFileByName gets a Files if exists
+func (inMemory InMemory) GetFileByName(fname string) (File, error) {
+	if f, ok := inMemory.Files[fname]; ok {
+		return *f, nil
+	}
+
+	return File{}, errors.New("File not found")
+}
+
 // GetFileBySameData
 // Update
 // Delete
