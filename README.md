@@ -63,6 +63,7 @@ ref: https://www.tecmint.com/sync-new-changed-modified-files-rsync-linux/
 How to make sure only changed data is send across network like applying a diff patch.
 
 [DONE] setup pre-commit hooks for analysing code quality.
+TODO: helper messages for cli
 
 
 ### Install Pre-commit for code analysis
