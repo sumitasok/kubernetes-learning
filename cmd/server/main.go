@@ -28,6 +28,7 @@ func main() {
 	router.PUT("/files", fileStore.UpdateFile)
 	router.GET("/files", fileStore.LsFile)
 	router.GET("/files/:filename", fileStore.GetFile)
+	router.DELETE("/files/:filename", fileStore.DeleteFile)
 
 	router.Run(os.Getenv("PORT"))
 }

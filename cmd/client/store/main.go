@@ -25,15 +25,27 @@ func main() {
 		update(os.Args[2:]...)
 	case "download":
 		download(os.Args[2])
+	case "rm":
+		rm(os.Args[2])
 	}
 }
 
 // FileResp holds the response from files
 type FileResp struct {
-	Data map[string]struct {
-		Checksum string `json:'Checksum'`
-		name     string `json:'Name'`
-	} `json:'data'`
+	Data    map[string]File `json:'data'`
+	Status  string          `json:'status'`
+	Message string          `json:'message'`
+}
+
+// File holds the file info.
+type File struct {
+	Checksum string `json:'Checksum'`
+	name     string `json:'Name'`
+}
+
+// SingleFileResp holds the response for single file
+type SingleFileResp struct {
+	Data    File   `json:'data'`
 	Status  string `json:'status'`
 	Message string `json:'message'`
 }
@@ -172,4 +184,24 @@ func download(filename string) {
 		log.Println("could't download file ", err.Error())
 		return
 	}
+}
+
+func rm(filename string) {
+	client := &http.Client{}
+	req, err := http.NewRequest("DELETE", RemoteStoreBaseURL+"/files/"+filename, nil)
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Println("could't remove file ", err.Error())
+	}
+	defer resp.Body.Close()
+
+	decoder := json.NewDecoder(resp.Body)
+	var t SingleFileResp
+	err = decoder.Decode(&t)
+
+	if err != nil {
+		log.Println("could't remove file ", err.Error())
+	}
+
+	log.Println("remove file: ", t)
 }

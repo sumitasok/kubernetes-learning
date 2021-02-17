@@ -72,3 +72,17 @@ func (inMemory InMemory) GetFileByName(fname string) (File, error) {
 // GetFileBySameData
 // Update
 // Delete
+
+// DeleteFileByName deletes a Files if exists
+func (inMemory InMemory) DeleteFileByName(fname string) (File, error) {
+	f, ok := inMemory.Files[fname]
+	if !ok {
+		return File{}, errors.New("File not found")
+	}
+
+	delete(inMemory.Files, fname)
+	// it is safe to do this even if checksum key is missing the map
+	delete(inMemory.CheckSums, f.Checksum)
+
+	return *f, nil
+}

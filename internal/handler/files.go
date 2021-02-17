@@ -135,7 +135,7 @@ func (fS FileStore) UpdateFile(c *gin.Context) {
 	c.JSON(http.StatusAccepted, gin.H{"data": fS.MetaStore.Files, "status": "UPDATED", "message": "file was updated succesfully"})
 }
 
-// GetFile returns a single file to local
+// GetFile returns a single file to client
 func (fS FileStore) GetFile(c *gin.Context) {
 	targetPath := filepath.Join("/store/", c.Param("filename"))
 	c.Header("Content-Description", "File Transfer")
@@ -143,4 +143,24 @@ func (fS FileStore) GetFile(c *gin.Context) {
 	c.Header("Content-Disposition", "attachment; filename="+c.Param("filename"))
 	c.Header("Content-Type", "application/octet-stream")
 	c.File(targetPath)
+}
+
+// DeleteFile delete a single file from server
+func (fS FileStore) DeleteFile(c *gin.Context) {
+	targetPath := filepath.Join("/store/", c.Param("filename"))
+
+	f, err := fS.MetaStore.DeleteFileByName(c.Param("filename"))
+	if err != nil {
+		log.Println("Remove failed", err)
+		c.JSON(http.StatusNotAcceptable, gin.H{"data": f, "status": "FAILED", "message": "file deletion failed " + err.Error()})
+		return
+	}
+
+	if err := os.Remove(targetPath); err != nil {
+		log.Println("Remove failed", err)
+		c.JSON(http.StatusNotAcceptable, gin.H{"data": f, "status": "FAILED", "message": "file deletion failed " + err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusAccepted, gin.H{"data": f, "status": "DONE", "message": "successfully deleted file"})
 }

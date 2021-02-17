@@ -30,3 +30,16 @@ func TestInMemory_GetFileByName(t *testing.T) {
 	_, err = iM.GetFileByName("fileB.txt")
 	assert.Error(err)
 }
+
+func TestInMemory_DeleteFileByName(t *testing.T) {
+	assert := assert.New(t)
+
+	iM := store.NewInMemory()
+
+	assert.NoError(iM.Add("fileA.txt", "check-sum-1"))
+	f, err := iM.DeleteFileByName("fileA.txt")
+	assert.NoError(err)
+	assert.Equal(f.Checksum, "check-sum-1")
+	_, err = iM.DeleteFileByName("fileA.txt")
+	assert.Error(err)
+}
