@@ -18,6 +18,12 @@ cd cmd/client/store
 go install
 ```
 
+checkout this API which downloads the file:
+
+```
+store download filename.txt
+```
+
 ## Requirement and Task analysis
 
 Text files only; check the allowed file extension;

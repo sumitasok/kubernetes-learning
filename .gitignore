@@ -20,3 +20,4 @@ filestore/*.*
 cmd/client/store/filename.txt
 cmd/client/store/filename_edited.txt
 cmd/client/store/note.txt
+cmd/client/store/filename.txt_1

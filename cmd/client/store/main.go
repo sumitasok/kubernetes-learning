@@ -23,6 +23,8 @@ func main() {
 		ls()
 	case "update":
 		update(os.Args[2:]...)
+	case "download":
+		download(os.Args[2])
 	}
 }
 
@@ -41,7 +43,7 @@ func ls() {
 	req, err := http.NewRequest("GET", RemoteStoreBaseURL+"/files", nil)
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Println("coun't list files ", err.Error())
+		log.Println("could't list files ", err.Error())
 	}
 	defer resp.Body.Close()
 
@@ -50,7 +52,7 @@ func ls() {
 	err = decoder.Decode(&t)
 
 	if err != nil {
-		log.Println("coun't list files ", err.Error())
+		log.Println("could't list files ", err.Error())
 	}
 
 	// TODO: display in more readable tabular format
@@ -146,5 +148,28 @@ func update(files ...string) {
 }
 
 func logCouldntAddFile(filename, message string) {
-	log.Println("coun't add file ", filename, message)
+	log.Println("could't add file ", filename, message)
+}
+
+func download(filename string) {
+	client := &http.Client{}
+	req, err := http.NewRequest("GET", RemoteStoreBaseURL+"/files/"+filename, nil)
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Println("could't download file ", err.Error())
+	}
+	defer resp.Body.Close()
+
+	outputFile, err := os.Create(filename)
+	if err != nil {
+		log.Println("could't download file ", err.Error())
+		return
+	}
+	defer outputFile.Close()
+
+	_, err = io.Copy(outputFile, resp.Body)
+	if err != nil {
+		log.Println("could't download file ", err.Error())
+		return
+	}
 }
